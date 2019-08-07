@@ -1,0 +1,70 @@
+
+[<abstract>Internet]
+
+[Platform|
+
+  [<frame>Users|
+    [<actor> user1]
+    [<actor> userN]
+    [user1] --- [userN]
+  ]
+  
+  [Database|
+  	[Users|
+    	- contact_info]
+    [Videos|
+      - hash
+      - source
+      - meta_info]
+    [Biometrics|
+      - facial_data
+      - meta_data]
+    
+    [Users] <-> [Videos]
+    [Users] <-> [Biometrics]
+  ]
+  [Crawler| 
+  - component: url_scraper
+  - component: meta_info_scraper
+  - component: checksum_calc
+  ]
+  [Analyzer|
+  - component: frame_decoupler
+  - component: composition_ai_agent
+  ]
+  [Face recognition|
+  - component: face_recognition_ai_agent
+  ]
+  [Notifier|
+  - component: push_notification
+  - component: email_notification
+  ]
+  
+  [<frame>Blockchain|
+	[Storage|
+     [User|
+     	- address]
+     [Verified videos|
+     	- hash
+        - user_claim
+      ]
+    
+     [User] <-> [Verified videos]
+    ]
+  ]
+  
+  [Explorer] <:-- [Database]
+  [Explorer] <:-- [Blockchain]
+  [Database] <:--:> [Blockchain]
+  [Database] <:-- store [Crawler]
+  [Database] <:-- store [Analyzer]
+  [Face recognition] <:--:> [Database]
+  [Crawler] --:> [Analyzer]
+  [Crawler] <:-:> [<abstract>Internet]
+  [Notifier] <:-- [Face recognition]
+  [Users] <:-- [Notifier]
+  [Users] --:> [Blockchain]
+]
+
+[Internet] --> [Platform]
+[Users] --> [Platform]
