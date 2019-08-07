@@ -1,1 +1,3 @@
 # blockface
+
+![](./docs/architecture.png)
